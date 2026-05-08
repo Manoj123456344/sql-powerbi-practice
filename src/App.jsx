@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { sqlQuestionsData } from "./data/sqlQuestions";
+import { powerBIQuestionsData } from "./data/powerbiQuestions";
+
 export default function SQLPowerBIPracticePlatform() {
 
   const [currentUser, setCurrentUser] = useState("Manoj");
@@ -10,11 +13,13 @@ export default function SQLPowerBIPracticePlatform() {
       answers: {},
       dates: {}
     },
+
     Almas: {
       solved: [],
       answers: {},
       dates: {}
     },
+
     Guest: {
       solved: [],
       answers: {},
@@ -22,81 +27,9 @@ export default function SQLPowerBIPracticePlatform() {
     }
   });
 
-  const allSqlQuestions = [
-    {
-      question: "Find the 2nd highest salary from Employee table.",
-      difficulty: "Medium",
-      topic: "Subquery",
-      solution:
-        "SELECT MAX(salary) FROM employee WHERE salary < (SELECT MAX(salary) FROM employee)"
-    },
-    {
-      question: "Difference between ROW_NUMBER and RANK?",
-      difficulty: "Easy",
-      topic: "Window Functions",
-      solution:
-        "ROW_NUMBER gives unique numbers. RANK gives same rank for duplicates."
-    },
-    {
-      question: "Write query to remove duplicate rows.",
-      difficulty: "Medium",
-      topic: "CTE",
-      solution:
-        "Use ROW_NUMBER with CTE and delete duplicates."
-    },
-    {
-      question: "Difference between WHERE and HAVING?",
-      difficulty: "Easy",
-      topic: "Filtering",
-      solution:
-        "WHERE filters before aggregation. HAVING filters after aggregation."
-    },
-    {
-      question: "Explain INNER JOIN with example.",
-      difficulty: "Easy",
-      topic: "Joins",
-      solution:
-        "INNER JOIN returns matching rows from both tables."
-    }
-  ];
+  const allSqlQuestions = sqlQuestionsData;
 
-  const allDaxQuestions = [
-    {
-      question: "Difference between Measure and Calculated Column?",
-      difficulty: "Easy",
-      topic: "DAX",
-      solution:
-        "Measure calculates dynamically. Calculated column stores values physically."
-    },
-    {
-      question: "Create Running Total measure in Power BI.",
-      difficulty: "Medium",
-      topic: "Time Intelligence",
-      solution:
-        "Use CALCULATE and FILTER functions."
-    },
-    {
-      question: "Explain Star Schema in Power BI.",
-      difficulty: "Easy",
-      topic: "Data Modeling",
-      solution:
-        "Fact table connected with dimension tables."
-    },
-    {
-      question: "Difference between Import and DirectQuery?",
-      difficulty: "Medium",
-      topic: "Storage Mode",
-      solution:
-        "Import stores data. DirectQuery fetches live data."
-    },
-    {
-      question: "Explain CALCULATE function in DAX.",
-      difficulty: "Hard",
-      topic: "DAX",
-      solution:
-        "CALCULATE changes filter context."
-    }
-  ];
+  const allDaxQuestions = powerBIQuestionsData;
 
   const getDailyQuestions = (questions) => {
 
@@ -109,49 +42,57 @@ export default function SQLPowerBIPracticePlatform() {
     const day = adjustedDate.getDate();
 
     return [
+
       questions[day % questions.length],
+
       questions[(day + 1) % questions.length],
+
       questions[(day + 2) % questions.length],
+
       questions[(day + 3) % questions.length],
+
       questions[(day + 4) % questions.length]
+
     ];
   };
 
   const sqlQuestions = getDailyQuestions(allSqlQuestions);
+
   const daxQuestions = getDailyQuestions(allDaxQuestions);
 
   useEffect(() => {
 
-  const savedData =
-    JSON.parse(localStorage.getItem("practicePlatformData"));
+    const savedData =
+      JSON.parse(localStorage.getItem("practicePlatformData"));
 
-  if (savedData) {
+    if (savedData) {
 
-    setUserData({
+      setUserData({
 
-      Manoj: savedData.Manoj || {
-        solved: [],
-        answers: {},
-        dates: {}
-      },
+        Manoj: savedData.Manoj || {
+          solved: [],
+          answers: {},
+          dates: {}
+        },
 
-      Almas: savedData.Almas || {
-        solved: [],
-        answers: {},
-        dates: {}
-      },
+        Almas: savedData.Almas || {
+          solved: [],
+          answers: {},
+          dates: {}
+        },
 
-      Guest: savedData.Guest || {
-        solved: [],
-        answers: {},
-        dates: {}
-      }
+        Guest: savedData.Guest || {
+          solved: [],
+          answers: {},
+          dates: {}
+        }
 
-    });
+      });
 
-  }
+    }
 
-}, []);
+  }, []);
+
   useEffect(() => {
 
     localStorage.setItem(
@@ -222,7 +163,8 @@ export default function SQLPowerBIPracticePlatform() {
 
             dates: {
               ...prev[currentUser].dates,
-              [item.question]: new Date().toLocaleDateString()
+              [item.question]:
+                new Date().toLocaleDateString()
             }
 
           }
@@ -340,6 +282,7 @@ export default function SQLPowerBIPracticePlatform() {
 
       <div className="max-w-7xl mx-auto space-y-6">
 
+        {/* Header */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
@@ -380,6 +323,7 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
+        {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
           <div className="bg-white p-5 rounded-3xl shadow-md">
@@ -424,6 +368,7 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
+        {/* SQL Questions */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
@@ -444,6 +389,7 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
+        {/* Power BI Questions */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
@@ -464,6 +410,7 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
+        {/* Solved Questions History */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
           <h2 className="text-2xl font-bold mb-6">
@@ -539,6 +486,7 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
+        {/* Footer */}
         <div className="text-center text-gray-500 py-6 text-sm md:text-base">
 
           Built for SQL & Power BI Interview Preparation 🚀
