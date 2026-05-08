@@ -211,6 +211,24 @@ export default function SQLPowerBIPracticePlatform() {
   const solvedQuestions =
     userData[currentUser].solved.length;
 
+  const solvedSQL = sqlQuestions.filter((q) =>
+    userData[currentUser].solved.includes(q.question)
+  ).length;
+
+  const solvedPowerBI = daxQuestions.filter((q) =>
+    userData[currentUser].solved.includes(q.question)
+  ).length;
+
+  const sqlPercentage = Math.round(
+    (solvedSQL / sqlQuestions.length) * 100
+  );
+
+  const powerBIPercentage = Math.round(
+    (solvedPowerBI / daxQuestions.length) * 100
+  );
+
+  const streak = solvedQuestions;
+
   const today = new Date().toDateString();
 
   const QuestionCard = ({ item, color }) => {
@@ -330,72 +348,49 @@ export default function SQLPowerBIPracticePlatform() {
         </div>
 
         {/* Stats */}
-        {/* Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
-const solvedQuestions =
-  userData[currentUser].solved.length;
+          <div className="bg-white p-5 rounded-3xl shadow-md">
+            <h2 className="text-gray-500 text-sm">
+              Questions Solved
+            </h2>
 
-const solvedSQL = sqlQuestions.filter((q) =>
-  userData[currentUser].solved.includes(q.question)
-).length;
+            <p className="text-3xl font-bold mt-2">
+              {solvedQuestions}
+            </p>
+          </div>
 
-const solvedPowerBI = daxQuestions.filter((q) =>
-  userData[currentUser].solved.includes(q.question)
-).length;
+          <div className="bg-white p-5 rounded-3xl shadow-md">
+            <h2 className="text-gray-500 text-sm">
+              SQL Score
+            </h2>
 
-const sqlPercentage = Math.round(
-  (solvedSQL / sqlQuestions.length) * 100
-);
+            <p className="text-3xl font-bold mt-2 text-blue-600">
+              {sqlPercentage}%
+            </p>
+          </div>
 
-const powerBIPercentage = Math.round(
-  (solvedPowerBI / daxQuestions.length) * 100
-);
+          <div className="bg-white p-5 rounded-3xl shadow-md">
+            <h2 className="text-gray-500 text-sm">
+              Power BI Score
+            </h2>
 
-const streak = solvedQuestions;
+            <p className="text-3xl font-bold mt-2 text-green-600">
+              {powerBIPercentage}%
+            </p>
+          </div>
 
-<div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white p-5 rounded-3xl shadow-md">
+            <h2 className="text-gray-500 text-sm">
+              Daily Streak
+            </h2>
 
-  <div className="bg-white p-5 rounded-3xl shadow-md">
-    <h2 className="text-gray-500 text-sm">
-      Questions Solved
-    </h2>
+            <p className="text-3xl font-bold mt-2 text-orange-500">
+              {streak} 🔥
+            </p>
+          </div>
 
-    <p className="text-3xl font-bold mt-2">
-      {solvedQuestions}
-    </p>
-  </div>
-
-  <div className="bg-white p-5 rounded-3xl shadow-md">
-    <h2 className="text-gray-500 text-sm">
-      SQL Score
-    </h2>
-
-    <p className="text-3xl font-bold mt-2 text-blue-600">
-      {sqlPercentage}%
-    </p>
-  </div>
-
-  <div className="bg-white p-5 rounded-3xl shadow-md">
-    <h2 className="text-gray-500 text-sm">
-      Power BI Score
-    </h2>
-
-    <p className="text-3xl font-bold mt-2 text-green-600">
-      {powerBIPercentage}%
-    </p>
-  </div>
-
-  <div className="bg-white p-5 rounded-3xl shadow-md">
-    <h2 className="text-gray-500 text-sm">
-      Daily Streak
-    </h2>
-
-    <p className="text-3xl font-bold mt-2 text-orange-500">
-      {streak} 🔥
-    </p>
-  </div>
-
-</div>
+        </div>
 
         {/* SQL Questions */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
@@ -475,60 +470,61 @@ const streak = solvedQuestions;
           </div>
 
         </div>
-{/* Solved Questions History */}
 
-<div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
+        {/* Solved Questions History */}
+        <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
-  <h2 className="text-2xl font-bold mb-6">
-    Solved Questions History
-  </h2>
+          <h2 className="text-2xl font-bold mb-6">
+            Solved Questions History
+          </h2>
 
-  {userData[currentUser].solved.length === 0 ? (
+          {userData[currentUser].solved.length === 0 ? (
 
-    <p className="text-gray-500">
-      No solved questions yet.
-    </p>
+            <p className="text-gray-500">
+              No solved questions yet.
+            </p>
 
-  ) : (
+          ) : (
 
-    <div className="space-y-4">
+            <div className="space-y-4">
 
-      {userData[currentUser].solved.map((question, index) => (
+              {userData[currentUser].solved.map((question, index) => (
 
-        <div
-          key={index}
-          className="border border-gray-200 rounded-2xl p-4 bg-gray-50"
-        >
+                <div
+                  key={index}
+                  className="border border-gray-200 rounded-2xl p-4 bg-gray-50"
+                >
 
-          <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start justify-between gap-4">
 
-            <div>
+                    <div>
 
-              <p className="font-semibold text-gray-800">
-                {question}
-              </p>
+                      <p className="font-semibold text-gray-800">
+                        {question}
+                      </p>
 
-              <p className="text-sm text-gray-500 mt-1">
-                Solved by {currentUser}
-              </p>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Solved by {currentUser}
+                      </p>
+
+                    </div>
+
+                    <div className="text-green-600 font-bold">
+                      ✅
+                    </div>
+
+                  </div>
+
+                </div>
+
+              ))}
 
             </div>
 
-            <div className="text-green-600 font-bold">
-              ✅
-            </div>
-
-          </div>
+          )}
 
         </div>
 
-      ))}
-
-    </div>
-
-  )}
-
-</div>
         {/* Footer */}
         <div className="text-center text-gray-500 py-6 text-sm md:text-base">
 
