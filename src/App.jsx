@@ -7,11 +7,18 @@ export default function SQLPowerBIPracticePlatform() {
   const [userData, setUserData] = useState({
     Manoj: {
       solved: [],
-      answers: {}
+      answers: {},
+      dates: {}
     },
     Almas: {
       solved: [],
-      answers: {}
+      answers: {},
+      dates: {}
+    },
+    Guest: {
+      solved: [],
+      answers: {},
+      dates: {}
     }
   });
 
@@ -190,7 +197,12 @@ export default function SQLPowerBIPracticePlatform() {
             solved: [
               ...prev[currentUser].solved,
               item.question
-            ]
+            ],
+
+            dates: {
+              ...prev[currentUser].dates,
+              [item.question]: new Date().toLocaleDateString()
+            }
 
           }
 
@@ -307,7 +319,6 @@ export default function SQLPowerBIPracticePlatform() {
 
       <div className="max-w-7xl mx-auto space-y-6">
 
-        {/* Header */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
@@ -339,6 +350,7 @@ export default function SQLPowerBIPracticePlatform() {
               >
                 <option>Manoj</option>
                 <option>Almas</option>
+                <option>Guest</option>
               </select>
 
             </div>
@@ -347,7 +359,6 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
           <div className="bg-white p-5 rounded-3xl shadow-md">
@@ -392,7 +403,6 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
-        {/* SQL Questions */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
@@ -413,7 +423,6 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
-        {/* Power BI Questions */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
@@ -434,44 +443,6 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
-        {/* Progress */}
-        <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
-
-          <h2 className="text-2xl font-bold mb-6">
-            Practice Progress
-          </h2>
-
-          <div className="space-y-5">
-
-            <div className="flex items-center justify-between border-b pb-4">
-
-              <h3 className="font-semibold text-lg">
-                Manoj
-              </h3>
-
-              <div className="text-xl font-bold">
-                {userData.Manoj.solved.length} Solved
-              </div>
-
-            </div>
-
-            <div className="flex items-center justify-between border-b pb-4">
-
-              <h3 className="font-semibold text-lg">
-                Almas
-              </h3>
-
-              <div className="text-xl font-bold">
-                {userData.Almas.solved.length} Solved
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* Solved Questions History */}
         <div className="bg-white rounded-3xl shadow-lg p-5 md:p-8">
 
           <h2 className="text-2xl font-bold mb-6">
@@ -492,14 +463,14 @@ export default function SQLPowerBIPracticePlatform() {
 
                 <div
                   key={index}
-                  className="border border-gray-200 rounded-2xl p-4 bg-gray-50"
+                  className="border border-gray-200 rounded-2xl p-5 bg-gray-50"
                 >
 
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start justify-between gap-4 mb-3">
 
                     <div>
 
-                      <p className="font-semibold text-gray-800">
+                      <p className="font-semibold text-gray-800 text-lg">
                         {question}
                       </p>
 
@@ -507,11 +478,33 @@ export default function SQLPowerBIPracticePlatform() {
                         Solved by {currentUser}
                       </p>
 
+                      <p className="text-sm text-blue-600 mt-1">
+                        Date: {
+                          userData[currentUser].dates?.[question]
+                          || today
+                        }
+                      </p>
+
                     </div>
 
-                    <div className="text-green-600 font-bold">
+                    <div className="text-green-600 font-bold text-xl">
                       ✅
                     </div>
+
+                  </div>
+
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 mt-3">
+
+                    <p className="text-sm font-semibold text-gray-500 mb-2">
+                      Your Answer
+                    </p>
+
+                    <p className="text-gray-800 whitespace-pre-wrap">
+                      {
+                        userData[currentUser].answers?.[question]
+                        || "No answer available"
+                      }
+                    </p>
 
                   </div>
 
@@ -525,7 +518,6 @@ export default function SQLPowerBIPracticePlatform() {
 
         </div>
 
-        {/* Footer */}
         <div className="text-center text-gray-500 py-6 text-sm md:text-base">
 
           Built for SQL & Power BI Interview Preparation 🚀
