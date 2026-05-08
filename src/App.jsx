@@ -122,15 +122,36 @@ export default function SQLPowerBIPracticePlatform() {
 
   useEffect(() => {
 
-    const savedData =
-      JSON.parse(localStorage.getItem("practicePlatformData"));
+  const savedData =
+    JSON.parse(localStorage.getItem("practicePlatformData"));
 
-    if (savedData) {
-      setUserData(savedData);
-    }
+  if (savedData) {
 
-  }, []);
+    setUserData({
 
+      Manoj: savedData.Manoj || {
+        solved: [],
+        answers: {},
+        dates: {}
+      },
+
+      Almas: savedData.Almas || {
+        solved: [],
+        answers: {},
+        dates: {}
+      },
+
+      Guest: savedData.Guest || {
+        solved: [],
+        answers: {},
+        dates: {}
+      }
+
+    });
+
+  }
+
+}, []);
   useEffect(() => {
 
     localStorage.setItem(
